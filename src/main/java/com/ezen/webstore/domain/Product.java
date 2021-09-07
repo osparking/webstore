@@ -90,6 +90,11 @@ public class Product implements Serializable {
 	public long getUnitsInStock() {
 		return unitsInStock;
 	}
+	
+	public String getUnitsInStockStr() {
+		DecimalFormat formatter = new DecimalFormat("#,###");
+		return formatter.format(unitsInStock);
+	}
 
 	public void setUnitsInStock(long unitsInStock) {
 		this.unitsInStock = unitsInStock;

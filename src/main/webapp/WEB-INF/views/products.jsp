@@ -28,7 +28,7 @@
 					<h3>${product.name}</h3>
 					<p>${product.description}</p>
 					<p>₩${product.unitPriceStr}</p>
-					<p>제고 수량 : ${product.unitsInStock}</p>
+					<p>제고 수량 : ${product.unitsInStockStr}</p>
 				</div>
 			</div>
 		</div>
