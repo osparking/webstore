@@ -6,4 +6,5 @@ import com.ezen.webstore.domain.Product;
 
 public interface ProductRepository {
 	List<Product> getAllProducts();
+	int updateStock(String productId, long noOfUnits);
 }
