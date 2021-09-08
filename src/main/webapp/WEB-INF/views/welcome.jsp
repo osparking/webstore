@@ -16,8 +16,9 @@
 	<div class="jumbotron">
 		<h1>${greeting}</h1>
 		<p>${tagline}</p>
-		<p><a href="http://localhost:8080/webstore/update/stock">
-			500미만 상품 제고 1000만큼 증가</a></p>
+		<p><a href="customers">고객 목록 보기</a></p>
+		<p><a href="update/stock">500미만 상품 제고 1000 증가</a></p>
+		<p><a href="products">상품 목록 보기</a></p>
 	</div>
 </body>
 </html>

@@ -9,3 +9,12 @@ INSERT INTO PRODUCTS VALUES ('P1235', '델 인스피리온',
 INSERT INTO PRODUCTS VALUES ('P1236', '넥서스 7',
 '구글 넥서스 7 is the lightest 7 inch tablet With a quad-core Qualcomm Snapdragon?S4 Pro processor',
 300000,'Google','Tablet','New',1000,0,false);
+
+INSERT INTO customers VALUES (
+  'C001', 'Park', 'Seoul', 1);
+  
+INSERT INTO customers VALUES (
+  'C002', '김길동', '부산시', 100);
+  
+INSERT INTO customers VALUES (
+  'C003', '최숙자', '충청도', 10000);
