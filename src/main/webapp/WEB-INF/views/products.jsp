@@ -12,27 +12,29 @@
 </head>
 <body>
 	<section>
-	<div class="jumbotron">
-		<div class="container">
-			<h1>상품 목록</h1>
-			<p>All the available products in our store</p>
+		<div class="jumbotron">
+			<div class="container">
+				<h1>상품 목록</h1>
+				<p>All the available products in our store</p>
+			</div>
 		</div>
-	</div>
 	</section>
 
 	<section class="container">
-	<div class="row">
-		<div class="col-sm-6 col-md-3">
-			<div class="thumbnail">
-				<div class="caption">
-					<h3>${product.name}</h3>
-					<p>${product.description}</p>
-					<p>₩${product.unitPriceStr}</p>
-					<p>제고 수량 : ${product.unitsInStockStr}</p>
+		<div class="row">
+			<c:forEach items="${products}" var="product">
+				<div class="col-sm-6 col-md-3">
+					<div class="thumbnail">
+						<div class="caption">
+							<h3>${product.name}</h3>
+							<p>${product.description}</p>
+							<p>₩${product.unitPriceStr}</p>
+							<p>제고 수량 : ${product.unitsInStockStr}</p>
+						</div>
+					</div>
 				</div>
-			</div>
+			</c:forEach>
 		</div>
-	</div>
 	</section>
 </body>
 </html>

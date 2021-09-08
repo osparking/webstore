@@ -8,7 +8,7 @@ public class DispatcherServletInitializer
 	// AACDSInitializer
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return null;
+		return new Class[] { RootApplicationContextConfig.class };
 	}
 
 	@Override
