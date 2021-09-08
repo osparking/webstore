@@ -11,11 +11,15 @@
 <title>상품</title>
 </head>
 <body>
+	<script>
+		<c:set var="home" value="${pageContext.request.contextPath}"/>	
+	</script>
 	<section>
 		<div class="jumbotron">
 			<div class="container">
 				<h1>상품 목록</h1>
 				<p>All the available products in our store</p>
+				<p><a href="${home}">홈으로</a></p>				
 			</div>
 		</div>
 	</section>
