@@ -9,7 +9,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 @Configuration
-@ComponentScan("com.ezen.webstore")
 public class RootApplicationContextConfig {
 	// MariaDB 사용 때:
 	@Bean
