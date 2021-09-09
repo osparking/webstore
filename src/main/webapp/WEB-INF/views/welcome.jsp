@@ -19,6 +19,7 @@
 		<p><a href="customers">고객 목록 보기</a></p>
 		<p><a href="market/update/stock">500미만 상품 제고 1000 증가</a></p>
 		<p><a href="market/products">상품 목록 보기</a></p>
+		<p><a href="market/products/Laptop">랩탑 보기</a></p>
 	</div>
 </body>
 </html>

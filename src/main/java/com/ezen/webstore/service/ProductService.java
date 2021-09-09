@@ -8,4 +8,5 @@ public interface ProductService {
 	int updateAllStock();
 	List<Product> getAllProducts();
 	List<Product> getAllProducts(String string);
+	List<Product> getProductsByCategory(String category);
 }

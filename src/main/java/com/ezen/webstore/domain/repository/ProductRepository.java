@@ -8,4 +8,5 @@ public interface ProductRepository {
 	List<Product> getAllProducts();
 	int updateStock(String productId, long noOfUnits);
 	List<Product> getAllProducts(String... string);
+	List<Product> getProductsByCategory(String category);
 }

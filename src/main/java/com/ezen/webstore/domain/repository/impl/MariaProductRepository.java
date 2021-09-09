@@ -71,5 +71,15 @@ public class MariaProductRepository implements ProductRepository {
 
 		return jdbcTemplate.update(SQL, params);
 	}
+
+	@Override
+	public List<Product> getProductsByCategory(String category) {
+		String SQL = "SELECT * FROM PRODUCTS " 
+				+ "WHERE LCASE(CATEGORY) = :category";
+		Map<String, Object> params = new HashMap<String, Object>();
+		
+		params.put("category", category.toLowerCase());
+		return jdbcTemplate.query(SQL, params, new ProductMapper());
+	}
 	//@formatter:on
 }
