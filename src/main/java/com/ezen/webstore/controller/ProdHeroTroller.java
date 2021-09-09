@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ezen.webstore.service.ProductService;
 
 @Controller
+@RequestMapping("market")
 public class ProdHeroTroller {
 	@Autowired
 	private ProductService productService; 
