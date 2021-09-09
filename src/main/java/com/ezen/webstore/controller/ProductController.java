@@ -9,6 +9,7 @@ import com.ezen.webstore.domain.repository.ProductRepository;
 import com.ezen.webstore.service.ProductService;
 
 @Controller
+@RequestMapping("market")
 public class ProductController {
 
 	@Autowired
@@ -17,7 +18,7 @@ public class ProductController {
 	@RequestMapping("/update/stock") 
 	public String updateAllStock() {
 		productService.updateAllStock();
-		return "redirect:/products"; 
+		return "redirect:/market/products"; 
 	}
 	
 	@RequestMapping("/products") 
