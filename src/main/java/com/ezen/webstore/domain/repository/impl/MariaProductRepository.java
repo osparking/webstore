@@ -81,5 +81,14 @@ public class MariaProductRepository implements ProductRepository {
 		params.put("category", category.toLowerCase());
 		return jdbcTemplate.query(SQL, params, new ProductMapper());
 	}
+
+	@Override
+	public List<Product> getProductsByFilter(
+			Map<String, List<String>> filterParams) {
+		String SQL = "SELECT * FROM PRODUCTS WHERE CATEGORY "
+				+ "IN (:categories) AND MANUFACTURER IN (:brands)";
+		
+		return jdbcTemplate.query(SQL, filterParams, new ProductMapper());
+	}
 	//@formatter:on
 }

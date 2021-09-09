@@ -20,6 +20,9 @@
 		<p><a href="market/update/stock">500미만 상품 제고 1000 증가</a></p>
 		<p><a href="market/products">상품 목록 보기</a></p>
 		<p><a href="market/products/Laptop">랩탑 보기</a></p>
+		<p><a href="market/products/tablet">태블릿 보기</a></p>
+		<p><a href="market/products/filter/params;categories=Laptop,Tablet;
+			brands=Google,Dell">상품 2 중 필터</a></p>
 	</div>
 </body>
 </html>
