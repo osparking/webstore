@@ -23,6 +23,7 @@
 		<p><a href="market/products/tablet">태블릿 보기</a></p>
 		<p><a href="market/products/filter/params;categories=Laptop,Tablet;
 			brands=Google,Dell">상품 2 중 필터</a></p>
+		<p><a href="market/product?id=P1234">상품(P1234)</a></p>
 	</div>
 </body>
 </html>

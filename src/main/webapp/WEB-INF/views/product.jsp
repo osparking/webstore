@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet"
 	href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-<title>ID로 찾은 상품</title>
+<title>상품</title>
 </head>
 <body>
 	<script>
@@ -38,9 +38,9 @@
 					<strong>상품범주</strong> : ${product.category}
 				</p>
 				<p>
-					<strong>재고 수량 </strong> : ${product.unitsInStock}
+					<strong>재고 수량 </strong> : ${product.unitsInStockStr}
 				</p>
-				<h4>${product.unitPrice}원</h4>
+				<h4>${product.unitPriceStr}미달러</h4>
 				<p>
 					<a href="#" class="btn btn-warning btn-large"> <span
 						class="glyphicon-shopping-cart glyphicon"></span>주문하기
@@ -49,5 +49,7 @@
 			</div>
 		</div>
 	</section>
+
+	
 </body>
 </html>
