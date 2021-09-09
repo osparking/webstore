@@ -24,6 +24,7 @@
 		<p><a href="market/products/filter/params;categories=Laptop,Tablet;
 			brands=Google,Dell">상품 2 중 필터</a></p>
 		<p><a href="market/product?id=P1234">상품(P1234)</a></p>
+		<p><a href="market/products/Tablet/price;low=200000;high=400000?brand=Google">복합조건 검색</a></p>
 	</div>
 </body>
 </html>

@@ -100,4 +100,18 @@ public class MariaProductRepository implements ProductRepository {
 		
 		return jdbcTemplate.queryForObject(SQL, params, new ProductMapper());
 	}
+
+	@Override
+	public List<Product> getProdsByMultiFilter(String productCategory, 
+			Map<String, String> criteria, String brand) {
+		
+		String SQL = "SELECT * FROM PRODUCTS WHERE CATEGORY = :category "
+				+ "AND MANUFACTURER = :brand "
+				+ "AND UNIT_PRICE >= :low And UNIT_PRICE <= :high";
+		
+		criteria.put("category", productCategory); // **
+		criteria.put("brand", brand);
+		
+		return jdbcTemplate.query(SQL, criteria, new ProductMapper());
+	}
 }
