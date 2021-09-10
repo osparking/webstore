@@ -2,6 +2,7 @@ package com.ezen.webstore.service.impl;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,7 +60,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public List<Product> getProdsByMultiFilter(String productCategory,
-			Map<String, String> price, String brand) {
+			Map<String, String> price, Optional<String> brand) {
 		return productRepository.getProdsByMultiFilter(
 				productCategory, price, brand);
 	}

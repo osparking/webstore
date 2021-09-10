@@ -2,6 +2,7 @@ package com.ezen.webstore.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import com.ezen.webstore.domain.Product;
 
@@ -13,5 +14,5 @@ public interface ProductService {
 	List<Product> getProductsByFilter(Map<String, List<String>> filter);
 	Product getProductById(String productID);
 	List<Product> getProdsByMultiFilter(String productCategory, 
-			Map<String, String> price, String brand);
+			Map<String, String> price, Optional<String> brand);
 }

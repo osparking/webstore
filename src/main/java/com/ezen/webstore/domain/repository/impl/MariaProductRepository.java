@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
@@ -102,13 +103,13 @@ public class MariaProductRepository implements ProductRepository {
 
 	@Override
 	public List<Product> getProdsByMultiFilter(String productCategory, 
-			Map<String, String> criteria, String brand) {
+			Map<String, String> criteria, Optional<String> brand) {
 		var SQL = new StringBuilder("SELECT * FROM PRODUCTS");
 		SQL.append(" WHERE CATEGORY = :category");
 		SQL.append(" AND UNIT_PRICE >= :low And UNIT_PRICE <= :high");
-		if (brand != null) {
+		if (brand.isPresent()) {
 			SQL.append(" AND MANUFACTURER = :brand ");
-			criteria.put("brand", brand);
+			criteria.put("brand", brand.get());
 		}
 		criteria.put("category", productCategory);
 		
