@@ -32,9 +32,8 @@ public class ProductController {
 	 * @return 폼 LVN(논리뷰명칭)
 	 */
 	@RequestMapping(value = "/products/add", method = RequestMethod.GET)
-	public String getAddNewProductForm(Model model) {
-		Product newProduct = new Product();
-		model.addAttribute("newProduct", newProduct);
+	public String getAddNewProductForm(
+			@ModelAttribute("newProduct") Product newProduct) {
 		return "addProduct";
 	}
 
@@ -49,8 +48,7 @@ public class ProductController {
 			Product newProduct, BindingResult result) {
 		String[] suppressedFields = result.getSuppressedFields();
 		if (suppressedFields.length > 0) {
-			throw new RuntimeException(
-					"엮어오려는 허용되지 않은 항목 : " + 
+			throw new RuntimeException("엮어오려는 허용되지 않은 항목 : " + 
 			StringUtils.arrayToCommaDelimitedString(suppressedFields));
 		}
 		productService.addProduct(newProduct);
