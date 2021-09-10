@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +22,7 @@ import com.ezen.webstore.service.ProductService;
 
 @Controller
 @RequestMapping("market")
-//@formatter:of
+//@formatter:off
 public class ProductController {
 
 	@Autowired
@@ -48,7 +50,7 @@ public class ProductController {
 			Product newProduct, BindingResult result) {
 		String[] suppressedFields = result.getSuppressedFields();
 		if (suppressedFields.length > 0) {
-			throw new RuntimeException("엮어오려는 허용되지 않은 항목 : " + 
+			throw new RuntimeException("허용되지 않은 것 중 바인딩 시도된 항목 : " + 
 			StringUtils.arrayToCommaDelimitedString(suppressedFields));
 		}
 		productService.addProduct(newProduct);
@@ -96,4 +98,17 @@ public class ProductController {
 
 		return "product";
 	}
+	
+	//@formatter:on
+	@InitBinder
+	public void initialiseBinder(WebDataBinder binder) {
+		binder.setAllowedFields("productId", "name", "unitPrice", "description",
+				"manufacturer", "category", "unitsInStock", "condition");
+	}
+	@InitBinder
+	public void initialiseBinder2(String binder) {
+//		binder.setAllowedFields("productId", "name", "unitPrice", "description",
+//				"manufacturer", "category", "unitsInStock", "condition");
+	}
+
 }
