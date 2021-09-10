@@ -17,9 +17,9 @@
 		<h1>${greeting}</h1>
 		<p>${tagline}</p>
 		<p><a href="customers/add">새 고객 추가</a></p>
-		<p><a href="market/products/add">신상품 추가</a></p>
 		<p><a href="customers">고객 목록 보기</a></p>
 		<p><a href="market/update/stock">500미만 상품 제고 1000 증가</a></p>
+		<p><a href="market/products/add">신상품 추가</a></p>
 		<p><a href="market/products">상품 목록 보기</a></p>
 		<p><a href="market/products/Laptop">랩탑 보기</a></p>
 		<p><a href="market/products/tablet">태블릿 보기</a></p>
@@ -28,6 +28,7 @@
 		<p><a href="market/product?id=P1234">상품(P1234)</a></p>
 		<p><a href="market/products/Tablet/price;low=200000;high=400000?brand=Google">복합조건 검색</a></p>
 		<p><a href="market/products/laptop/price;low=500000;high=900000">품종-가격 검색</a></p>
+		<p><a href="endpointdoc">종점 목록 보기</a></p>
 	</div>
 </body>
 </html>
