@@ -1,0 +1,129 @@
+commit 8ddb98b983075f402956837a2ae25926532644c1
+Author: Park,JongBum <jbpark03@gmail.com>
+Date:   Thu Sep 9 22:31:07 2021 +0900
+
+    another challenge
+
+diff --git a/src/main/java/com/ezen/webstore/controller/ProdHeroTroller.java b/src/main/java/com/ezen/webstore/controller/ProdHeroTroller.java
+index 11451c9..a89a25e 100644
+--- a/src/main/java/com/ezen/webstore/controller/ProdHeroTroller.java
++++ b/src/main/java/com/ezen/webstore/controller/ProdHeroTroller.java
+@@ -1,6 +1,7 @@
+ package com.ezen.webstore.controller;
+ 
+ import java.util.Map;
++import java.util.Optional;
+ 
+ import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.stereotype.Controller;
+@@ -23,11 +24,10 @@ public class ProdHeroTroller {
+ 			@PathVariable("category") String productCategory,
+ 			@MatrixVariable(pathVar="price") 
+ 			Map<String,String> price,
+-			@RequestParam String brand
++			@RequestParam Optional<String> brand
+ 			) {
+ 		model.addAttribute("products", productService.
+ 				getProdsByMultiFilter(productCategory, price, brand));
+ 		return "products";
+ 	}
+-
+ }
+diff --git a/src/main/java/com/ezen/webstore/domain/repository/ProductRepository.java b/src/main/java/com/ezen/webstore/domain/repository/ProductRepository.java
+index d4033c7..a297c30 100644
+--- a/src/main/java/com/ezen/webstore/domain/repository/ProductRepository.java
++++ b/src/main/java/com/ezen/webstore/domain/repository/ProductRepository.java
+@@ -2,6 +2,7 @@ package com.ezen.webstore.domain.repository;
+ 
+ import java.util.List;
+ import java.util.Map;
++import java.util.Optional;
+ 
+ import com.ezen.webstore.domain.Product;
+ 
+@@ -15,5 +16,5 @@ public interface ProductRepository {
+ 			Map<String, List<String>> filterParams);
+ 	Product getProductById(String productID);
+ 	List<Product> getProdsByMultiFilter(String productCategory,
+-			Map<String, String> price, String brand);
++			Map<String, String> price, Optional<String> brand);
+ }
+diff --git a/src/main/java/com/ezen/webstore/domain/repository/impl/MariaProductRepository.java b/src/main/java/com/ezen/webstore/domain/repository/impl/MariaProductRepository.java
+index cca4455..f9d5b41 100644
+--- a/src/main/java/com/ezen/webstore/domain/repository/impl/MariaProductRepository.java
++++ b/src/main/java/com/ezen/webstore/domain/repository/impl/MariaProductRepository.java
+@@ -5,6 +5,7 @@ import java.sql.SQLException;
+ import java.util.HashMap;
+ import java.util.List;
+ import java.util.Map;
++import java.util.Optional;
+ 
+ import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.jdbc.core.RowMapper;
+@@ -103,15 +104,18 @@ public class MariaProductRepository implements ProductRepository {
+ 
+ 	@Override
+ 	public List<Product> getProdsByMultiFilter(String productCategory, 
+-			Map<String, String> criteria, String brand) {
++			Map<String, String> criteria, Optional<String> brand) {
+ 		
+-		String SQL = "SELECT * FROM PRODUCTS WHERE CATEGORY = :category "
+-				+ "AND MANUFACTURER = :brand "
+-				+ "AND UNIT_PRICE >= :low And UNIT_PRICE <= :high";
+-		
+-		criteria.put("category", productCategory); // **
+-		criteria.put("brand", brand);
++		var SQL = new StringBuilder("SELECT * FROM PRODUCTS ");
++		SQL.append("WHERE CATEGORY = :category ");
++		SQL.append("AND UNIT_PRICE >= :low And UNIT_PRICE <= :high ");
++		if (brand.isPresent()) {
++			SQL.append("AND MANUFACTURER = :brand");
++			criteria.put("brand", brand.get());
++		}
++		criteria.put("category", productCategory);
+ 		
+-		return jdbcTemplate.query(SQL, criteria, new ProductMapper());
++		return jdbcTemplate.query(SQL.toString(), criteria, 
++				new ProductMapper());
+ 	}
+ }
+diff --git a/src/main/java/com/ezen/webstore/service/ProductService.java b/src/main/java/com/ezen/webstore/service/ProductService.java
+index a293d96..9bbd07d 100644
+--- a/src/main/java/com/ezen/webstore/service/ProductService.java
++++ b/src/main/java/com/ezen/webstore/service/ProductService.java
+@@ -2,6 +2,7 @@ package com.ezen.webstore.service;
+ 
+ import java.util.List;
+ import java.util.Map;
++import java.util.Optional;
+ 
+ import com.ezen.webstore.domain.Product;
+ 
+@@ -13,5 +14,5 @@ public interface ProductService {
+ 	List<Product> getProductsByFilter(Map<String, List<String>> filter);
+ 	Product getProductById(String productID);
+ 	List<Product> getProdsByMultiFilter(String productCategory, 
+-			Map<String, String> price, String brand);
++			Map<String, String> price, Optional<String> brand);
+ }
+diff --git a/src/main/java/com/ezen/webstore/service/impl/ProductServiceImpl.java b/src/main/java/com/ezen/webstore/service/impl/ProductServiceImpl.java
+index 58bfcc0..6ae946f 100644
+--- a/src/main/java/com/ezen/webstore/service/impl/ProductServiceImpl.java
++++ b/src/main/java/com/ezen/webstore/service/impl/ProductServiceImpl.java
+@@ -2,6 +2,7 @@ package com.ezen.webstore.service.impl;
+ 
+ import java.util.List;
+ import java.util.Map;
++import java.util.Optional;
+ 
+ import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.stereotype.Service;
+@@ -59,7 +60,7 @@ public class ProductServiceImpl implements ProductService {
+ 
+ 	@Override
+ 	public List<Product> getProdsByMultiFilter(String productCategory,
+-			Map<String, String> price, String brand) {
++			Map<String, String> price, Optional<String> brand) {
+ 		return productRepository.getProdsByMultiFilter(
+ 				productCategory, price, brand);
+ 	}
