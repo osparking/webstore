@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.ezen.webstore.domain.Customer;
+import com.ezen.webstore.domain.Product;
 import com.ezen.webstore.domain.repository.CustomerRepository;
 
 //@formatter:off
@@ -39,5 +40,21 @@ public class MariaCustomerRepository implements CustomerRepository {
 			customer.setNoOfOrdersMade(rs.getInt("noOfOrdersMade"));
 			return customer;
 		}
+	}
+
+	//@formatter:on
+	@Override
+	public void addCustomer(Customer customer) {
+		var SQL = new StringBuilder("INSERT INTO customers");
+		SQL.append(" (ID, NAME, ADDRESS, noOfOrdersMade)");
+		SQL.append(" VALUES (:id, :name, :address, :noOfOrdersMade)");
+
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("id", customer.getCustomerId());
+		params.put("name", customer.getAddress());
+		params.put("address", customer.getName());
+		params.put("noOfOrdersMade", customer.getNoOfOrdersMade());
+
+		jdbcTemplate.update(SQL.toString(), params);
 	}
 }
