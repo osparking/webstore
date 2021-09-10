@@ -109,8 +109,8 @@ public class MariaProductRepository implements ProductRepository {
 		if (brand != null) {
 			SQL.append(" AND MANUFACTURER = :brand ");
 			criteria.put("brand", brand);
-		}		
-		criteria.put("category", productCategory); // **
+		}
+		criteria.put("category", productCategory);
 		
 		return jdbcTemplate.query(SQL.toString(), criteria, 
 				new ProductMapper());

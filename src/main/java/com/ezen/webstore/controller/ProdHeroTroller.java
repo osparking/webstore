@@ -30,15 +30,4 @@ public class ProdHeroTroller {
 				getProdsByMultiFilter(productCategory, price, brand));
 		return "products";
 	}
-	
-	@RequestMapping("/products/{category}/{price}/allBrand")
-	public String getProdsByMultiFilter(Model model, 
-			@PathVariable("category") String productCategory,
-			@MatrixVariable(pathVar="price") Map<String,String> price
-			) {
-		model.addAttribute("products", productService.
-				getProdsByMultiFilter(productCategory, price, null));
-		return "products";
-	}
-
 }
