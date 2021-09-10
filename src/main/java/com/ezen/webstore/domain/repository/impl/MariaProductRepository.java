@@ -117,4 +117,29 @@ public class MariaProductRepository implements ProductRepository {
 				new ProductMapper());
 	}
 	//@formatter:on
+
+	@Override
+	public void addProduct(Product product) {
+		var SQL = new StringBuilder("INSERT INTO PRODUCTS");
+		SQL.append(" (ID, PROD_NAME, DESCRIPTION, UNIT_PRICE,");
+		SQL.append(" MANUFACTURER, CATEGORY, PROD_CONDITION,");
+		SQL.append(" UNITS_IN_STOCK, UNITS_IN_ORDER, DISCONTINUED)");
+		SQL.append(" VALUES (:id, :name, :desc, :price, :manufacturer,");
+		SQL.append(" :category, :condition, :inStock, :inOrder, ");
+		SQL.append(" :discontinued)"); 
+		
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("id", product.getProductId());  
+		params.put("name", product.getName());  
+		params.put("desc", product.getDescription());  
+		params.put("price", product.getUnitPrice());  
+		params.put("manufacturer", product.getManufacturer());  
+		params.put("category", product.getCategory());  
+		params.put("condition", product.getCondition());  
+		params.put("inStock", product.getUnitsInStock());  
+		params.put("inOrder", product.getUnitsInOrder());  
+		params.put("discontinued", product.isDiscontinued());  	
+		
+		jdbcTemplate.update(SQL.toString(), params); 
+	}
 }

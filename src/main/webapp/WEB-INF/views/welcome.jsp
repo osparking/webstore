@@ -16,7 +16,7 @@
 	<div class="jumbotron">
 		<h1>${greeting}</h1>
 		<p>${tagline}</p>
-		<p><a href="endpointdoc">End Points 목록</a></p>
+		<p><a href="market/products/add">신상품 추가</a></p>
 		<p><a href="customers">고객 목록 보기</a></p>
 		<p><a href="market/update/stock">500미만 상품 제고 1000 증가</a></p>
 		<p><a href="market/products">상품 목록 보기</a></p>
