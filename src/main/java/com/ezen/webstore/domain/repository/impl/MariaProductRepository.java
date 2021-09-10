@@ -90,7 +90,6 @@ public class MariaProductRepository implements ProductRepository {
 		
 		return jdbcTemplate.query(SQL, filterParams, new ProductMapper());
 	}
-	//@formatter:on
 
 	@Override
 	public Product getProductById(String productID) {
@@ -104,14 +103,17 @@ public class MariaProductRepository implements ProductRepository {
 	@Override
 	public List<Product> getProdsByMultiFilter(String productCategory, 
 			Map<String, String> criteria, String brand) {
-		
-		String SQL = "SELECT * FROM PRODUCTS WHERE CATEGORY = :category "
-				+ "AND MANUFACTURER = :brand "
-				+ "AND UNIT_PRICE >= :low And UNIT_PRICE <= :high";
-		
+		var SQL = new StringBuilder("SELECT * FROM PRODUCTS");
+		SQL.append(" WHERE CATEGORY = :category");
+		SQL.append(" AND UNIT_PRICE >= :low And UNIT_PRICE <= :high");
+		if (brand != null) {
+			SQL.append(" AND MANUFACTURER = :brand ");
+			criteria.put("brand", brand);
+		}		
 		criteria.put("category", productCategory); // **
-		criteria.put("brand", brand);
 		
-		return jdbcTemplate.query(SQL, criteria, new ProductMapper());
+		return jdbcTemplate.query(SQL.toString(), criteria, 
+				new ProductMapper());
 	}
+	//@formatter:on
 }

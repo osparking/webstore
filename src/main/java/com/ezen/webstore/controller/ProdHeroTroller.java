@@ -23,10 +23,21 @@ public class ProdHeroTroller {
 			@PathVariable("category") String productCategory,
 			@MatrixVariable(pathVar="price") 
 			Map<String,String> price,
-			@RequestParam String brand
+			@RequestParam(value="brand", required=false) 
+				String brand
 			) {
 		model.addAttribute("products", productService.
 				getProdsByMultiFilter(productCategory, price, brand));
+		return "products";
+	}
+	
+	@RequestMapping("/products/{category}/{price}/allBrand")
+	public String getProdsByMultiFilter(Model model, 
+			@PathVariable("category") String productCategory,
+			@MatrixVariable(pathVar="price") Map<String,String> price
+			) {
+		model.addAttribute("products", productService.
+				getProdsByMultiFilter(productCategory, price, null));
 		return "products";
 	}
 
