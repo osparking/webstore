@@ -29,10 +29,21 @@
 				<div class="form-group">
 					<label class="control-label col-lg-2 col-lg-2" for="productId">
 						상품 ID </label>
-					<div class="col-lg-10">
-						<form:input id="productId" path="productId" type="text"
-							class="form:input-large" />
-					</div>
+					<c:choose>
+					<c:when test="${update}">
+						<div class="col-lg-10">
+							<form:input id="productId" path="productId" type="text"
+								class="form:input-large" disabled="true"
+								value="${newProduct.productId}" />
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div class="col-lg-10">
+							<form:input id="productId" path="productId" type="text"
+								class="form:input-large" />
+						</div>
+					</c:otherwise>
+					</c:choose>
 				</div>
 
 				<div class="form-group">

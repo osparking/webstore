@@ -43,6 +43,17 @@ public class ProductController {
 		return "addProduct";
 	}
 
+	@RequestMapping(value = "/product/update", method = RequestMethod.GET)
+	public String updateProduct(Model model, 
+			@ModelAttribute("newProduct") Product newProduct,
+			@RequestParam("id") String productId) {
+		model.addAttribute("newProduct", 
+				productService.getProductById(productId));
+		model.addAttribute("update", true);
+
+		return "addProduct";
+	}
+
 	/**
 	 * 신상품 정보를 FBBean(Form Backing Bean)을 통해서 받아와서 저장한다.
 	 * @param newProduct 폼 배킹 빈
@@ -113,11 +124,11 @@ public class ProductController {
 
 		return "products";
 	}
-
+	
 	@RequestMapping("/product")
 	public String getProductById(Model model, @RequestParam("id") String productId) {
 		model.addAttribute("product", productService.getProductById(productId));
-
+		
 		return "product";
 	}
 	
