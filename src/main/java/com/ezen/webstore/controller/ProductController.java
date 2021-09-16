@@ -65,15 +65,15 @@ public class ProductController {
 		String rootDirectory = 
 				request.getSession().getServletContext().getRealPath("/");
 
-		if (productImage!=null && !productImage.isEmpty()) {
-			try {
-				productImage.transferTo(new 
-						File(rootDirectory+"resources\\images\\"
-								+ newProduct.getProductId() + ".png"));
-			} catch (Exception e) {
-				throw new RuntimeException("Product Image saving failed", e);
-			}
-		}
+//		if (productImage!=null && !productImage.isEmpty()) {
+//			try {
+//				productImage. transferTo(new 
+//						File(rootDirectory+"resources\\images\\"
+//								+ newProduct.getProductId() + ".png"));
+//			} catch (Exception e) {
+//				throw new RuntimeException("Product Image saving failed", e);
+//			}
+//		}
 
 		productService.addProduct(newProduct);
 		return "redirect:/market/products";
