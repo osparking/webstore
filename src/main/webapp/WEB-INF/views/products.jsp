@@ -30,9 +30,9 @@
 	<section class="container">
 		<div class="row">
 			<c:forEach items="${products}" var="product">
-				<div class="col-sm-6 col-md-3">
-					<div class="thumbnail">
-						<img src="<c:url value='/img/${product.productId}.png'></c:url>"
+				<div class="col-sm-6 col-md-3" style="height:450px">
+					<div class="thumbnail" style="height:100%">
+						<img src="<c:url value='/img/${product.productId}.png'/>"
 							alt="상품 사진" style="width: 100%" />
 
 						<div class="caption">
