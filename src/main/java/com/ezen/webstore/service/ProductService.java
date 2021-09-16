@@ -16,4 +16,5 @@ public interface ProductService {
 	List<Product> getProdsByMultiFilter(String productCategory, 
 			Map<String, String> price, Optional<String> brand);
 	void addProduct(Product product);
+	void updateProduct(Product updatedProduct, String rootDirectory);
 }

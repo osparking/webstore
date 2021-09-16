@@ -16,7 +16,7 @@
 	<div class="jumbotron">
 		<h1>${greeting}</h1>
 		<p>${tagline}</p>
-		<p><a href="market/product/update?id=P1234">상품(P1234)</a></p>
+		<p><a href="market/product/update?id=P2001">상품(P2001) - 갱신</a></p>
 		<p><a href="customers/add">새 고객 추가</a></p>
 		<p><a href="customers">고객 목록 보기</a></p>
 		<p><a href="market/update/stock">500미만 상품 제고 1000 증가</a></p>

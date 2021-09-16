@@ -26,7 +26,7 @@ import com.ezen.webstore.service.ProductService;
 
 @Controller
 @RequestMapping("market")
-//@formatter:off
+//@formatter:of
 public class ProductController {
 
 	@Autowired
@@ -34,6 +34,7 @@ public class ProductController {
 
 	/**
 	 * 신상품 추가 폼을 반환한다.
+	 * 
 	 * @param model 빈을 연결해주는 기본 자료
 	 * @return 폼 LVN(논리뷰명칭)
 	 */
@@ -53,6 +54,25 @@ public class ProductController {
 
 		return "addProduct";
 	}
+
+	@RequestMapping(value = "/product/update", method = RequestMethod.POST)
+	public String updateProduct(Model model, 
+			@ModelAttribute("newProduct") Product updatedProduct,
+			BindingResult result, HttpServletRequest request) {
+		
+		String[] suppressedFields = result.getSuppressedFields();
+		
+		if (suppressedFields.length > 0) {
+			throw new RuntimeException("허용되지 않은 것 중 바인딩 시도된 항목 : " + 
+				StringUtils.arrayToCommaDelimitedString(suppressedFields));
+		}
+		String rootDirectory = 
+				request.getSession().getServletContext().getRealPath("/");
+
+		productService.updateProduct(updatedProduct, rootDirectory);
+		return "redirect:/market/products";
+	}
+	//@formatter:off
 
 	/**
 	 * 신상품 정보를 FBBean(Form Backing Bean)을 통해서 받아와서 저장한다.
@@ -135,9 +155,9 @@ public class ProductController {
 	//@formatter:on
 	@InitBinder
 	public void initialiseBinder(WebDataBinder binder) {
-		binder.setAllowedFields("productId", "name", "unitPrice", "description",
-				"manufacturer", "category", "unitsInStock", "condition", 
-				"productImage");
+		binder.setAllowedFields("productId", "id", "name", "unitPrice", 
+				"description", "manufacturer", "category",
+				"unitsInStock", "condition", "productImage");
 	}
 
 }

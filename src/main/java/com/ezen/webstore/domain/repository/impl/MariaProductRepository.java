@@ -124,11 +124,17 @@ public class MariaProductRepository implements ProductRepository {
 		var SQL = new StringBuilder("INSERT INTO PRODUCTS");
 		SQL.append(" (ID, PROD_NAME, DESCRIPTION, UNIT_PRICE,");
 		SQL.append(" MANUFACTURER, CATEGORY, PROD_CONDITION,");
-		SQL.append(" UNITS_IN_STOCK, UNITS_IN_ORDER, DISCONTINUED,");
-		SQL.append(" IMAGE)");
+		SQL.append(" UNITS_IN_STOCK, UNITS_IN_ORDER, DISCONTINUED");
+		
+		if (product.getProductImage() == null ||
+				product.getProductImage().getSize() == 0) {
+			SQL.append(")");
+		} else {
+			SQL.append(", IMAGE)");
+		}
 		SQL.append(" VALUES (:id, :name, :desc, :price, :manufacturer,");
 		SQL.append(" :category, :condition, :inStock, :inOrder, ");
-		SQL.append(" :discontinued, :image)"); 
+		SQL.append(" :discontinued"); 
 		
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("id", product.getProductId());  
@@ -142,13 +148,54 @@ public class MariaProductRepository implements ProductRepository {
 		params.put("inOrder", product.getUnitsInOrder());  
 		params.put("discontinued", product.isDiscontinued());  	
 		try {
-			if (product.getProductImage() != null) {
+			if (product.getProductImage() == null ||
+					product.getProductImage().getSize() == 0) {
+				SQL.append(")"); 
+			} else {
+				SQL.append(", :image)"); 
 				params.put("image", product.getProductImage().getBytes());
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		} 	
-		
 		jdbcTemplate.update(SQL.toString(), params); 
+	}
+
+	@Override
+	public void updateProduct(Product updated, String root) {
+		var SQL = new StringBuilder("update PRODUCTS set");
+		SQL.append(" PROD_NAME = :PROD_NAME,");
+		SQL.append(" DESCRIPTION = :DESCRIPTION,");
+		SQL.append(" UNIT_PRICE = :UNIT_PRICE,");
+		SQL.append(" CATEGORY = :CATEGORY,");
+		SQL.append(" PROD_CONDITION = :PROD_CONDITION,");
+		SQL.append(" UNITS_IN_STOCK = :UNITS_IN_STOCK,");
+		SQL.append(" UNITS_IN_ORDER = :UNITS_IN_ORDER,");
+		SQL.append(" DISCONTINUED = :DISCONTINUED");
+		
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("PROD_NAME", updated.getName()); 		
+		params.put("DESCRIPTION", updated.getDescription()); 		
+		params.put("UNIT_PRICE", updated.getUnitPrice()); 		
+		params.put("CATEGORY", updated.getCategory()); 		
+		params.put("PROD_CONDITION", updated.getCondition()); 		
+		params.put("UNITS_IN_STOCK", updated.getUnitsInStock()); 		
+		params.put("UNITS_IN_ORDER", updated.getUnitsInOrder()); 		
+		params.put("DISCONTINUED", updated.isDiscontinued()); 		
+		
+		try {
+			if (updated.getProductImage() == null ||
+					updated.getProductImage().getSize() == 0) {
+				SQL.append(" where id = :id");
+			} else {
+				SQL.append(", image = :image where id = :id");
+				params.put("image", updated.getProductImage().getBytes());
+			}
+			params.put("id", updated.getProductId()); 	
+		} catch (IOException e) {
+			e.printStackTrace();
+		} 	
+		
+		jdbcTemplate.update(SQL.toString(), params);
 	}
 }

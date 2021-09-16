@@ -33,7 +33,7 @@
 					<c:when test="${update}">
 						<div class="col-lg-10">
 							<form:input id="productId" path="productId" type="text"
-								class="form:input-large" disabled="true"
+								class="form:input-large" readonly="true"
 								value="${newProduct.productId}" />
 						</div>
 					</c:when>

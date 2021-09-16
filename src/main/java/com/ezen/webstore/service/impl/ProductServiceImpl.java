@@ -69,4 +69,9 @@ public class ProductServiceImpl implements ProductService {
 	public void addProduct(Product product) {
 		productRepository.addProduct(product);
 	}
+
+	@Override
+	public void updateProduct(Product updatedProduct, String rootDirectory) {
+		productRepository.updateProduct(updatedProduct, rootDirectory);
+	}
 }
