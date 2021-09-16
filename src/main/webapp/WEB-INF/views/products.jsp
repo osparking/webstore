@@ -32,13 +32,17 @@
 			<c:forEach items="${products}" var="product">
 				<div class="col-sm-6 col-md-3">
 					<div class="thumbnail">
+						<img src="<c:url value='/img/${product.productId}.png'></c:url>"
+							alt="상품 사진" style="width: 100%" />
+
 						<div class="caption">
 							<h3>${product.name}</h3>
 							<p>${product.description}</p>
 							<p>₩${product.unitPriceStr}</p>
 							<p>제고 수량 : ${product.unitsInStockStr}</p>
 							<p>
-								<a href="<spring:url
+								<a
+									href="<spring:url
                            value='/market/product?id=${product.productId}' /> "
 									class="btn btn-primary"> <span
 									class="glyphicon-info-sign glyphicon" /></span>상세정보
