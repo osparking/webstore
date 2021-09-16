@@ -8,8 +8,8 @@ import com.ezen.webstore.domain.Product;
 
 public interface ProductService {
 	int updateAllStock();
-	List<Product> getAllProducts();
-	List<Product> getAllProducts(String string);
+	List<Product> getAllProducts(String root);
+	List<Product> getAllProducts(String root, String string);
 	List<Product> getProductsByCategory(String category);
 	List<Product> getProductsByFilter(Map<String, List<String>> filter);
 	Product getProductById(String productID);

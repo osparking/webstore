@@ -8,9 +8,9 @@ import com.ezen.webstore.domain.Product;
 
 //@formatter:off
 public interface ProductRepository {
-	List<Product> getAllProducts();
+	List<Product> getAllProducts(String root);
 	int updateStock(String productId, long noOfUnits);
-	List<Product> getAllProducts(String... string);
+	List<Product> getAllProducts(String root, String... string);
 	List<Product> getProductsByCategory(String category);
 	List<Product> getProductsByFilter(
 			Map<String, List<String>> filterParams);

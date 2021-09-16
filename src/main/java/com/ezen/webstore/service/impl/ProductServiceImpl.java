@@ -19,7 +19,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public int updateAllStock() {
-		List<Product> allProducts = productRepository.getAllProducts();
+		List<Product> allProducts = productRepository.getAllProducts("");
 
 		int count = 0;
 		for (Product product : allProducts) {
@@ -33,13 +33,13 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<Product> getAllProducts() {
-		return productRepository.getAllProducts();
+	public List<Product> getAllProducts(String root, String string) {
+		return productRepository.getAllProducts(root, string);
 	}
 
 	@Override
-	public List<Product> getAllProducts(String string) {
-		return productRepository.getAllProducts(string);
+	public List<Product> getAllProducts(String root) {
+		return productRepository.getAllProducts(root);
 	}
 
 	@Override

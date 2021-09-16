@@ -1,6 +1,9 @@
 package com.ezen.webstore.domain.repository.impl;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -16,6 +19,8 @@ import org.springframework.stereotype.Repository;
 import com.ezen.webstore.domain.Product;
 import com.ezen.webstore.domain.repository.ProductRepository;
 
+import lombok.NoArgsConstructor;
+
 //@formatter:off
 @Repository
 public class MariaProductRepository implements ProductRepository {
@@ -23,16 +28,15 @@ public class MariaProductRepository implements ProductRepository {
 	private NamedParameterJdbcTemplate jdbcTemplate;
 
 	@Override
-	public List<Product> getAllProducts() {
+	public List<Product> getAllProducts(String root) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		List<Product> result = jdbcTemplate.query("SELECT * FROM products", 
-				params, new ProductMapper());
+				params, new ProductMapper(root));
 		return result;
-
 	}
 
 	@Override
-	public List<Product> getAllProducts(String...args) {
+	public List<Product> getAllProducts(String root, String...args) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		String query = "SELECT * FROM products";
 		
@@ -45,7 +49,12 @@ public class MariaProductRepository implements ProductRepository {
 		return result;
 	}
 	
+	@NoArgsConstructor
 	private static final class ProductMapper implements RowMapper<Product> {
+		String root;
+		ProductMapper(String root) {
+			this.root = root;
+		}
 		@Override
 		public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Product product = new Product();
@@ -59,10 +68,35 @@ public class MariaProductRepository implements ProductRepository {
 			product.setUnitsInStock(rs.getLong("UNITS_IN_STOCK"));
 			product.setUnitsInOrder(rs.getLong("UNITS_IN_ORDER"));
 			product.setDiscontinued(rs.getBoolean("DISCONTINUED"));
+			
+			var blob = rs.getBlob("IMAGE");
+			if (blob != null && root != null) {
+				writeBytesToFile(root, blob.getBinaryStream(), rs.getString("ID"));
+			}
+
 			return product;
 		}
+		private void writeBytesToFile(String root, InputStream in, 
+				String prodID) {
+			String filePath = root + "resources\\images\\" 
+					+ prodID + ".png";
+			FileOutputStream out;
+			
+			try {
+				out = new FileOutputStream(filePath);
+				byte [] buff = new byte[4096];
+				int len = 0;
+				while ((len = in.read(buff)) != -1) {
+					out.write(buff, 0, len);
+				}
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
-
+	
 	@Override
 	public int updateStock(String productId, long noOfUnits) {
 		String SQL = "UPDATE PRODUCTS SET " +

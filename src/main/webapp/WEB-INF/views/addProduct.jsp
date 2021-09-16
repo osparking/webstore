@@ -91,15 +91,6 @@
 					</div>
 				</div>
 
-				<%-- 				<div class="form-group">
-					<label class="control-label col-lg-2 col-lg-2" for="unitsInOrder">
-						주문 수량</label>
-					<div class="col-lg-10">
-						<form:input id="unitsInOrder" path="unitsInOrder" type="text"
-							class="form:input-large" />
-					</div>
-				</div> --%>
-
 				<div class="form-group">
 					<label class="control-label col-lg-2" for="description"> 상품
 						설명</label>
