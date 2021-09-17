@@ -119,14 +119,9 @@ public class ProductController {
 	public String list(Model model, HttpServletRequest request) {
 		String root = request.getSession().
 				getServletContext().getRealPath("/");
-		
-		long startTime = System.currentTimeMillis();
 
 		model.addAttribute("products", 
 				productService.getAllProducts(root));
-		
-		long endTime = System.currentTimeMillis();
-		System.out.println("That took " + (endTime - startTime) + " milliseconds");		
 		
 		return "products";
 	}
