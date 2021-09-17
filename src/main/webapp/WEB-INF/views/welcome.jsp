@@ -16,6 +16,12 @@
 	<div class="jumbotron">
 		<h1>${greeting}</h1>
 		<p>${tagline}</p>
+		<p><a href='<c:url value="/market/product.xml?id=P1235"/>'>
+			상품-xml(P1235)</a></p>
+		<p><a href='<c:url value="/market/product.json?id=P1235"/>'>
+			상품-json(P1235)</a></p>
+		<p><a href='<c:url value="/market/product?id=P1235"/>'>
+			상품(P1235)</a></p>
 		<p><a href="market/product/update?id=P2001">상품(P2001) - 갱신</a></p>
 		<p><a href="customers/add">새 고객 추가</a></p>
 		<p><a href="customers">고객 목록 보기</a></p>

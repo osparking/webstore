@@ -95,14 +95,14 @@ public class ProductController {
 		MultipartFile productManual = newProduct.getProductManual();
 		if (productManual!=null && !productManual.isEmpty()) {
 			try {
-				String root = request.getSession().
-						getServletContext().getRealPath("/");
-				String dirPath = root + "resources\\pdf\\"; 
-				
-				File directory = new File(dirPath);
-				if (! directory.exists()) {
-					directory.mkdirs();
-				}				
+String root = request.getSession().
+		getServletContext().getRealPath("/");
+String dirPath = root + "resources\\pdf\\"; 
+
+File directory = new File(dirPath);
+if (! directory.exists()) {
+	directory.mkdirs();
+}				
 				
 				productManual.transferTo(new 
 						File(root + "resources\\pdf\\"
