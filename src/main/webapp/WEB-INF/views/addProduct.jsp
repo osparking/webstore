@@ -14,6 +14,12 @@
 </head>
 <body>
 	<section>
+		<div class="pull-right" style="padding-right: 50px">
+			<a href="?language=ko">한글</a>|<a href="?language=en">English</a>
+		</div>
+	</section>
+
+	<section>
 		<div class="jumbotron">
 			<div class="container">
 				<h1>Products</h1>
@@ -30,19 +36,19 @@
 					<label class="control-label col-lg-2 col-lg-2" for="productId">
 						상품 ID </label>
 					<c:choose>
-					<c:when test="${update}">
-						<div class="col-lg-10">
-							<form:input id="productId" path="productId" type="text"
-								class="form:input-large" readonly="true"
-								value="${newProduct.productId}" />
-						</div>
-					</c:when>
-					<c:otherwise>
-						<div class="col-lg-10">
-							<form:input id="productId" path="productId" type="text"
-								class="form:input-large" />
-						</div>
-					</c:otherwise>
+						<c:when test="${update}">
+							<div class="col-lg-10">
+								<form:input id="productId" path="productId" type="text"
+									class="form:input-large" readonly="true"
+									value="${newProduct.productId}" />
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="col-lg-10">
+								<form:input id="productId" path="productId" type="text"
+									class="form:input-large" />
+							</div>
+						</c:otherwise>
 					</c:choose>
 				</div>
 
@@ -112,8 +118,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label col-lg-2" for="productImage"> 
-					<spring:message
+					<label class="control-label col-lg-2" for="productImage"> <spring:message
 							code="addProduct.form.productImage.label" />
 					</label>
 					<div class="col-lg-10">
@@ -121,14 +126,14 @@
 							class="form:input-large" />
 					</div>
 				</div>
-				<!-- 상품 안내서 입력 -->		
+				<!-- 상품 안내서 입력 -->
 				<div class="form-group">
-					<label class="control-label col-lg-2" for="productManual"> 
+					<label class="control-label col-lg-2" for="productManual">
 						<spring:message code="addProduct.form.productManual.label" />
 					</label>
 					<div class="col-lg-10">
-					<form:input id="productManual" path="productManual" 
-							type="file" class="form:input-large" />
+						<form:input id="productManual" path="productManual" type="file"
+							class="form:input-large" />
 					</div>
 				</div>
 				<div class="form-group">
