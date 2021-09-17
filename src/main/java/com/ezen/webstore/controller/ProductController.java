@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ezen.webstore.domain.Product;
+import com.ezen.webstore.exception.NoProductsFoundUnderCategoryException;
 import com.ezen.webstore.service.ProductService;
 
 @Controller
@@ -140,9 +141,11 @@ if (! directory.exists()) {
 	@RequestMapping("/products/{category}")
 	public String getProductsByCategory(Model model, 
 			@PathVariable("category") String category) {
-		model.addAttribute("products", 
-				productService.getProductsByCategory(category));
-
+		var products = productService.getProductsByCategory(category); 
+		if (products == null || products.isEmpty()) {
+			throw new NoProductsFoundUnderCategoryException();
+		}
+		model.addAttribute("products", products);
 		return "products";
 	}
 
