@@ -61,7 +61,8 @@ public class MariaProductRepository implements ProductRepository {
 		@Override
 		public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Product product = new Product();
-			product.setProductId(rs.getString("ID"));
+			String prodId = rs.getString("ID");
+			product.setProductId(prodId);
 			product.setName(rs.getString("PROD_NAME"));
 			product.setDescription(rs.getString("DESCRIPTION"));
 			product.setUnitPrice(rs.getBigDecimal("UNIT_PRICE"));
@@ -73,15 +74,22 @@ public class MariaProductRepository implements ProductRepository {
 			product.setDiscontinued(rs.getBoolean("DISCONTINUED"));
 			
 			var blob = rs.getBlob("IMAGE");
-			if (blob != null && root != null) {
-				writeBytesToFile(root, blob.getBinaryStream(), rs.getString("ID"));
+			if (blob != null) {
+				writeBytesToFile(root, blob.getBinaryStream(),
+						"resources\\images\\", prodId, ".png");
+			}
+			
+			blob = rs.getBlob("MANUAL");
+			if (blob != null) {
+				writeBytesToFile(root, blob.getBinaryStream(), 
+						"resources\\pdf\\", prodId, ".pdf");
 			}
 
 			return product;
 		}
 		private void writeBytesToFile(String root, InputStream in, 
-				String prodID) {
-			String dirPath = root + "resources\\images\\"; 
+				String resoPath, String prodID, String ext3) {
+			String dirPath = root + resoPath; 
 					
 			File directory = new File(dirPath);
 			if (! directory.exists()) {
@@ -89,14 +97,12 @@ public class MariaProductRepository implements ProductRepository {
 			}
 			StringBuilder filePathSB = new StringBuilder(dirPath);
 			filePathSB.append(prodID);
-			filePathSB.append(".png");
-
-			FileOutputStream out;
+			filePathSB.append(ext3);
 			
-			try {
-				out = new FileOutputStream(filePathSB.toString());
+			try (var out = new FileOutputStream(filePathSB.toString())) {
 				byte [] buff = new byte[4096];
 				int len = 0;
+				
 				while ((len = in.read(buff)) != -1) {
 					out.write(buff, 0, len);
 				}
@@ -176,15 +182,17 @@ public class MariaProductRepository implements ProductRepository {
 		SQL.append(" MANUFACTURER, CATEGORY, PROD_CONDITION,");
 		SQL.append(" UNITS_IN_STOCK, UNITS_IN_ORDER, DISCONTINUED");
 		
-		if (product.getProductImage() == null ||
-				product.getProductImage().getSize() == 0) {
-			SQL.append(")");
-		} else {
-			SQL.append(", IMAGE)");
+		if (product.getProductImage().getSize() > 0) {
+			SQL.append(", IMAGE");
 		}
-		SQL.append(" VALUES (:id, :name, :desc, :price, :manufacturer,");
-		SQL.append(" :category, :condition, :inStock, :inOrder, ");
-		SQL.append(" :discontinued"); 
+		
+		if (product.getProductManual().getSize() > 0) {
+			SQL.append(", MANUAL");
+		}
+
+		SQL.append(") VALUES (:id, :name, :desc, :price,");
+		SQL.append(" :manufacturer, :category, :condition,");
+		SQL.append(" :inStock, :inOrder, :discontinued"); 
 		
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("id", product.getProductId());  
@@ -198,13 +206,17 @@ public class MariaProductRepository implements ProductRepository {
 		params.put("inOrder", product.getUnitsInOrder());  
 		params.put("discontinued", product.isDiscontinued());  	
 		try {
-			if (product.getProductImage() == null ||
-					product.getProductImage().getSize() == 0) {
-				SQL.append(")"); 
-			} else {
-				SQL.append(", :image)"); 
-				params.put("image", product.getProductImage().getBytes());
+			if (product.getProductImage().getSize() > 0) {
+				SQL.append(", :image"); 
+				params.put("image", 
+						product.getProductImage().getBytes());
 			}
+			if (product.getProductManual().getSize() > 0) {
+				SQL.append(", :manual"); 
+				params.put("manual", 
+						product.getProductManual().getBytes());
+			}
+			SQL.append(")"); 
 		} catch (IOException e) {
 			e.printStackTrace();
 		} 	
@@ -217,6 +229,7 @@ public class MariaProductRepository implements ProductRepository {
 		SQL.append(" PROD_NAME = :PROD_NAME,");
 		SQL.append(" DESCRIPTION = :DESCRIPTION,");
 		SQL.append(" UNIT_PRICE = :UNIT_PRICE,");
+		SQL.append(" MANUFACTURER = :MANUFACTURER,");
 		SQL.append(" CATEGORY = :CATEGORY,");
 		SQL.append(" PROD_CONDITION = :PROD_CONDITION,");
 		SQL.append(" UNITS_IN_STOCK = :UNITS_IN_STOCK,");
@@ -227,20 +240,25 @@ public class MariaProductRepository implements ProductRepository {
 		params.put("PROD_NAME", updated.getName()); 		
 		params.put("DESCRIPTION", updated.getDescription()); 		
 		params.put("UNIT_PRICE", updated.getUnitPrice()); 		
+		params.put("MANUFACTURER", updated.getManufacturer()); 		
 		params.put("CATEGORY", updated.getCategory()); 		
 		params.put("PROD_CONDITION", updated.getCondition()); 		
 		params.put("UNITS_IN_STOCK", updated.getUnitsInStock()); 		
 		params.put("UNITS_IN_ORDER", updated.getUnitsInOrder()); 		
 		params.put("DISCONTINUED", updated.isDiscontinued()); 		
-		
+ 
 		try {
-			if (updated.getProductImage() == null ||
-					updated.getProductImage().getSize() == 0) {
-				SQL.append(" where id = :id");
-			} else {
-				SQL.append(", image = :image where id = :id");
-				params.put("image", updated.getProductImage().getBytes());
+			if (updated.getProductImage().getSize() > 0) {
+				SQL.append(", image = :image");
+				params.put("image", 
+						updated.getProductImage().getBytes());
 			}
+			if (updated.getProductManual().getSize() > 0) {
+				SQL.append(", manual = :manual");
+				params.put("manual", 
+						updated.getProductManual().getBytes());
+			}
+			SQL.append(" where id = :id");
 			params.put("id", updated.getProductId()); 	
 		} catch (IOException e) {
 			e.printStackTrace();
