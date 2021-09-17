@@ -25,6 +25,8 @@ public class WebApplicationContextConfig
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/img/**")
 			.addResourceLocations("/resources/images/");
+		registry.addResourceHandler("/pdf/**")
+		.addResourceLocations("/resources/pdf/");		
 	}
 
 	@Override

@@ -30,6 +30,7 @@ public class Product implements Serializable {
 	private boolean discontinued;
 	private String condition;
 	private MultipartFile productImage;
+	private MultipartFile productManual;
 	
 	public Product() {
 		super();

@@ -46,6 +46,10 @@
 				<p>
 					<strong>재고 수량 </strong> : ${product.unitsInStockStr}
 				</p>
+				<p>
+					<strong><a href="/webstore/pdf/${product.productId}.pdf">
+						[설명서 내려받기(${product.productId}.pdf)]</a></strong>
+				</p>
 				<h4>${product.unitPriceStr}미달러</h4>
 				<p>
 					<a href="<spring:url value='/market/products' />"
