@@ -16,6 +16,8 @@
 	<div class="jumbotron">
 		<h1>${greeting}</h1>
 		<p>${tagline}</p>
+		<p><a href='<c:url value="/market/product?id=P1000"/>'>
+			없는 상품(P1000)</a></p>
 		<p><a href='<c:url value="/market/products/chargers"/>'>
 			검색-충전기</a></p>
 		<p><a href='<c:url value="/market/product.xml?id=P1235"/>'>
